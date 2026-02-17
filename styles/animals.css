@@ -144,6 +144,9 @@ nav{
 	/* make the menu "stick" to the top of the page */
 	position: sticky;
 	top: 0;
+
+	/* gives it a z index to make it appear over the pictures, which also have a position property */
+	z-index: 50;
 }
 
 /* the > selector means direct child, or only the ul that is a direct child of the nav (and not the ul inside of the ul) */
@@ -249,4 +252,44 @@ section article::before{
 	top: -15px;
 
 	transform: rotate(-5deg);
+}
+
+/* the first letter pseudo class allows you to target the first letter within an HTML element */
+h1 span{
+	display: block;
+	margin: 0 15px; /* so the words will stay spaced out, even with flex applied */
+}
+
+/* ::first-letter only works on block elements */
+h1 span::first-letter{
+	font-family: 'Moo Lah Lah', cursive;
+	font-size: 1.3em;
+}
+
+h1{
+	display: flex;
+	justify-content: center;
+}
+
+
+/***************************
+	attribute selectors
+****************************/
+
+/* attribute selectors allow you to target elements based on what the attribute contains, including searching that attribute:
+a[href]  targets any tag with an href (regardless of the value of that href)
+or, by value:
+= means matches exactly
+^= means begins with
+$= means ends with
+*= means contains */
+
+/* style all links that contain "wiki" */
+a[href*="wiki"]{
+	background-image: url('../images/wikipedia-icon.png');
+	background-size: contain;
+	background-repeat: no-repeat;
+
+	/* add a bit of padding to make space for the background */
+	padding-left: 1.5em;
 }
