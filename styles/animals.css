@@ -42,10 +42,21 @@
     font-style: normal;
 }
 
+
+/* use this if you want box-sizing to apply to all CSS elements 
+*{
+	box-sizing: border-box
+}*/
+
+
 /********************************
 			Custom Properties
 ********************************/
+/* root means the root of the document, this will make yout custom properties available to the whole page (or global in scope) */
+:root{
+	--mud-brown: #542401;
 
+}
 
 
 /********************************
@@ -83,3 +94,159 @@ footer{
 	Special (added in class)
 ********************************/
 
+main{
+	/* always set a maximum width for your site */
+	/* width: calc(960px - 50px);  calc is to adjust the size without allow the margin and padding implies on it */
+	width: 960px;
+	margin: 0 auto;
+
+	background-image: url('../images/corkback.jpg');
+	/* by default, a background image will repeat */
+
+	border: 25px solid var(--mud-brown); /* this will use the custom propertu set in :root, above */
+	border-top: 0px; /* this will remove the border on the top */
+	border-bottom-left-radius: 25px;
+	border-bottom-right-radius: 25px;
+	/* you can control the border radius for each corner separately */
+
+	padding: 25px 45px 45px; /* three values means top, left and right, bottom */
+	/* to account for the extra margin and padding, we can use box-sizing */
+	box-sizing: border-box; 
+	/* border-box means the padding and borderwill be calculated within the width (so long as you have ste a width) */
+
+	/* box shadow is a great effect for creating dimesion */
+	/* in boxshadow, the properties are:
+	type
+	x offeset
+	y offset
+	lenght (or size)
+	colour */
+	box-shadow: 5px 5px 10px black, inset 3px 3px 7px black;
+	/* first box is outside, second is inside (inset) */
+
+	/* this grid will allow us to posisiton some images to the left and some to the right */ 
+	display: grid;
+	grid-template-columns: 1fr;
+}
+
+/***************************
+	drop-down nav
+****************************/
+
+nav{
+	width: 960px;
+	margin: 0 auto;
+	background: var(--mud-brown);
+	height: 55px;
+	font-size: 2em;
+	border-top-left-radius: 25px;
+	border-top-right-radius: 25px;
+	/* make the menu "stick" to the top of the page */
+	position: sticky;
+	top: 0;
+}
+
+/* the > selector means direct child, or only the ul that is a direct child of the nav (and not the ul inside of the ul) */
+nav > ul{
+	display: flex;
+	justify-content: flex-end; /* pushes content to the right, or the opposite way the text starts */
+	padding-top: 15px;
+}
+
+/* now get only the list items that are direct children of the first ul */
+nav > ul > li{
+	padding: 0 10px;
+	position: relative; /* this needs to be position relative so it will hold the absolutely positioned drop-down */
+}
+
+nav ul li ul{
+	display: none;
+}
+
+/* make the hidden nav show up whenn you hover over one of the lsit items */
+nav ul li:hover ul{
+	display: block;
+	position: absolute; /* without this when you hover the drop-down the nav is gonna move a little bit for the left, and posisiton absolute helps to don't move, just drop-down when you hover */
+	background-color: var(--mud-brown);
+	padding: 10px;
+	box-shadow: 3px 3px 7px black;
+}
+
+nav a{
+	color: white;
+	font-weight: bold;
+	text-decoration: none; /* remove underline */
+}
+
+/* vertical space for the links in the drop-down nav
+line-height is a percentage, so 1.5 = 150% times the size of the font */
+nav ul li ul a{
+	line-height: 1.5;
+}
+
+/***************************
+	pictures
+****************************/
+p{
+	line-height: 1.4;
+	/* a bit of line height on blocks of text opens the text up, making it look more firendlier and easier to read */
+}
+
+article{
+	background-color: white;
+	border: 1px solid #aaa;
+	box-shadow: 2px 2px 4px rgb(50, 50, 50); /* this drop shadow is dark grey - a ittle lighter than the other shadows, and so will appear less strong */
+}
+
+header article{
+	/* a bit of padding for the first article without a picture */
+	margin: 20px 0;
+	padding: 10px;
+}
+
+section article{
+	/* fixed widths for the articles with pictures */
+	width: 350px;
+	padding: 23px;
+
+	/* make this position relative so it will hold the absolutely positioned before section, below */
+	position: relative;
+}
+
+/* set some of the sections to be on the right 
+nth-child(3) would only be the third child
+nth-child(2n) would be every second, starting with the second
+nth-child(2n + 1) would be every second, starting with the first
+nth-child(2n + 3) would be every second, starting with the third
+nth-child(3n) would be every third
+
+...you can do the same with nth-of-type, nth-last-child, and nth-last-of-type (you can also use odd and even instead of 2n)*/
+
+main section:nth-child(2n + 3){ /*2n means every second would be on the right*/
+	justify-self: end; /* this tells the elements to go to the end of the grid row, instead of the start */
+
+	/* use negative margin to make the images look overlapping */
+	margin-top: -100px;
+	margin-bottom: -100px;
+}
+
+/* every element in HTML has two extra sections: a before and after
+...but these sections only exist if you tell them to exist */
+/* THIS IS TO CREATE THE "TAPE" ON THE POLAROIDS */
+section article::before{
+	content: ' ';
+	/* by giving the before section content (a space) we are telling it to exist */
+
+	width: 180px;
+	height: 50px;
+
+	/* you can use rgba (a = alpha) to make something partially transparent */
+	background-color: rgba(222, 222, 222, 0.6);
+	/* alpha is a value between 0 and 1, where 0 is completely transparent and 1 is completely opaque */
+
+	position: absolute;
+	left: 105px;
+	top: -15px;
+
+	transform: rotate(-5deg);
+}
